@@ -56,7 +56,7 @@ public class AppController {
     }
 
     @RequestMapping(value = {"", "/{page}"}, method = RequestMethod.GET)
-    public ModelAndView showUser(@PathVariable(required=false, name="page") String page, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView showUser(@PathVariable(required=false, name="page") String page, HttpServletRequest request, HttpServletResponse response,Model model) {
         ModelAndView mv = new ModelAndView();
         PagedListHolder<AppModel> userList;
         if(page == null) {
@@ -66,6 +66,8 @@ public class AppController {
             userList.setSource(usersList);
             userList.setPageSize(2);
             // Setting PagedListHolder instance to session
+            model.addAttribute("list",usersList);
+
             request.getSession().setAttribute("userList", userList);
         }else if(page.equals("prev")) {
             // get the user list from session
@@ -84,7 +86,7 @@ public class AppController {
             userList.setPage(pageNum - 1);
         }
 
-        mv.setViewName("user");
+        mv.setViewName("test");
         return mv;
     }
 

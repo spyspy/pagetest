@@ -43,7 +43,41 @@
             全部資料有 ${totalSize} 筆，每一頁有 ${pageSize} 筆
         </td>
     </tr>
+    <tr>
+        <td colspan="4">
+    <c:set value="${userList}" var="userPageList" />
 
+    <c:choose>
+        <c:when test="${userPageList.firstPage}">
+            <span>Prev</span>
+        </c:when>
+        <c:otherwise>
+            <c:url value="/love/prev" var="url" />
+            <a href='<c:out value="${url}" />'>Prev</a>
+        </c:otherwise>
+    </c:choose>
+    <c:forEach begin="1" end="${userPageList.pageCount}" step="1"  varStatus="tagStatus">
+        <c:choose>
+            <c:when test="${(userPageList.page + 1) == tagStatus.index}">
+                <span>${tagStatus.index}</span>
+            </c:when>
+            <c:otherwise>
+                <c:url value="/love/${tagStatus.index}" var="url" />
+                <a href='<c:out value="${url}" />'>${tagStatus.index}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:choose>
+        <c:when test="${userPageList.lastPage}">
+            <span>Next</span>
+        </c:when>
+        <c:otherwise>
+            <c:url value="/love/next" var="url" />
+            <a href='<c:out value="${url}" />'>Next</a>
+        </c:otherwise>
+    </c:choose>
+        </td>
+    </tr>
 </table>
 </body>
 </html>
